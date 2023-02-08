@@ -7,6 +7,9 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { join } from 'path';
 import { Item } from './items/entities/item.entity';
 import { ItemsModule } from './items/items.module';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,12 +31,14 @@ import { ItemsModule } from './items/items.module';
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
-        entities: [Item],
+        entities: [Item, User],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
     ItemsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
